@@ -2,6 +2,7 @@
 using Firebase.Database.Query;
 using Microsoft.Extensions.Logging;
 using RegistroEstudiantes.Modelos.Modelos;
+
 namespace RegistroEstudiantes.AppMovil
 {
     public static class MauiProgram
@@ -26,7 +27,7 @@ namespace RegistroEstudiantes.AppMovil
 
         public static void Registrar()
         {
-            FirebaseClient client = new FirebaseClient("https://registroestudiantes-7ec8c-default-rtdb.firebaseio.com/");
+            FirebaseClient client = new FirebaseClient("https://estudiantes-4a646-default-rtdb.firebaseio.com/");
 
             var cursos = client.Child("Cursos").OnceAsync<Curso>();
 
@@ -44,7 +45,9 @@ namespace RegistroEstudiantes.AppMovil
                 client.Child("Cursos").PostAsync(new Curso { Nombre = "2do Medio" });
                 client.Child("Cursos").PostAsync(new Curso { Nombre = "3ro Medio" });
                 client.Child("Cursos").PostAsync(new Curso { Nombre = "4to Medio" });
+
             }
+
         }
     }
 }

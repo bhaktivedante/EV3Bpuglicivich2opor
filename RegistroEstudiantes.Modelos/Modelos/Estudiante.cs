@@ -14,7 +14,7 @@ namespace RegistroEstudiantes.Modelos.Modelos
         public string? CorreoElectronico { get; set; }
         public int Edad { get; set; }
 
-        public Curso Curso { get; set; }
+        public required Curso Curso { get; set; }
 
         public string NombreCompleto => $"{Nombre} {Apellido}";
 

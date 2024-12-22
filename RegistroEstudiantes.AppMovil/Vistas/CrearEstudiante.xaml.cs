@@ -1,4 +1,5 @@
 using Firebase.Database;
+using Firebase.Database.Query;
 using RegistroEstudiantes.Modelos.Modelos;
 namespace RegistroEstudiantes.AppMovil.Vistas;
 
@@ -43,6 +44,5 @@ public partial class CrearEstudiante : ContentPage
         {
             await DisplayAlert("Error", ex.Message, "OK");
         }
-
     }
 }
