@@ -46,15 +46,12 @@ public partial class ListarEstudiantes : ContentPage
         await Navigation.PushAsync(new CrearEstudiante());
     }
 
-    private async void listaCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void EditarButton_Clicked(object sender, EventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is Estudiante seleccionado)
+        // Obtener el estudiante desde el parámetro del botón
+        if (sender is Button button && button.CommandParameter is Estudiante estudiante)
         {
-            // Navegar a la pantalla de edición pasando el estudiante seleccionado
-            await Navigation.PushAsync(new EditarEstudiantes(seleccionado));
-
-            // Limpiar la selección para evitar reactivación
-            listaCollection.SelectedItem = null;
+            await Navigation.PushAsync(new EditarEstudiantes(estudiante));
         }
     }
 }
