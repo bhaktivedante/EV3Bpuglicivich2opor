@@ -6,8 +6,9 @@ namespace RegistroEstudiantes.AppMovil.Vistas;
 
 public partial class ListarEstudiantes : ContentPage
 {
-    FirebaseClient client = new FirebaseClient("https://registroestudiantes-7ec8c-default-rtdb.firebaseio.com/");
+    private FirebaseClient client = new FirebaseClient("https://registroestudiantes-7ec8c-default-rtdb.firebaseio.com/");
     public ObservableCollection<Estudiante> Lista { get; set; } = new ObservableCollection<Estudiante>();
+
     public ListarEstudiantes()
     {
         InitializeComponent();
@@ -17,21 +18,20 @@ public partial class ListarEstudiantes : ContentPage
 
     private void CargarLista()
     {
-        client.Child("Estudiantes").AsObservable<Estudiante>().Subscribe((estudiante) =>
+        client.Child("Estudiantes").AsObservable<Estudiante>().Subscribe(estudiante =>
         {
-            if (estudiante != null)
+            if (estudiante?.Object != null && !Lista.Any(e => e.NombreCompleto == estudiante.Object.NombreCompleto))
             {
                 Lista.Add(estudiante.Object);
             }
-
         });
     }
 
     private void filtroSearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
-        string filtro = filtroSearchBar.Text.ToUpper();
+        string filtro = filtroSearchBar.Text?.ToUpper() ?? string.Empty;
 
-        if (filtro.Length > 0)
+        if (!string.IsNullOrEmpty(filtro))
         {
             listaCollection.ItemsSource = Lista.Where(x => x.NombreCompleto.ToUpper().Contains(filtro));
         }
@@ -44,5 +44,17 @@ public partial class ListarEstudiantes : ContentPage
     private async void NuevoEstudianteBoton_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new CrearEstudiante());
+    }
+
+    private async void listaCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Estudiante seleccionado)
+        {
+            // Navegar a la pantalla de edición pasando el estudiante seleccionado
+            await Navigation.PushAsync(new EditarEstudiantes(seleccionado));
+
+            // Limpiar la selección para evitar reactivación
+            listaCollection.SelectedItem = null;
+        }
     }
 }

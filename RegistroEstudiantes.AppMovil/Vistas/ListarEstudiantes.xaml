@@ -7,29 +7,33 @@
         <Grid Padding="10" RowSpacing="10" ColumnSpacing="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Barra de búsqueda -->
             <SearchBar Placeholder="Buscar..."
                        x:Name="filtroSearchBar"
                        Grid.Row="0"
                        Grid.Column="0"
                        TextChanged="filtroSearchBar_TextChanged"/>
 
+            <!-- Botón para agregar un nuevo estudiante -->
             <Button Text="Nuevo Estudiante"
                     x:Name="NuevoEstudianteBoton"
                     Grid.Row="0"
                     Grid.Column="1"
                     Clicked="NuevoEstudianteBoton_Clicked"/>
 
+            <!-- Lista de estudiantes -->
             <CollectionView x:Name="listaCollection"
                             ItemsSource="{Binding Lista}"
                             Grid.Row="1"
-                            Grid.ColumnSpan="2">
+                            Grid.ColumnSpan="2"
+                            SelectionChanged="listaCollection_SelectionChanged">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnSpacing="10" Padding="5">
@@ -39,27 +43,31 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+
+                            <!-- Imagen del estudiante -->
                             <Image Grid.RowSpan="2"
                                    Source="profile.jpg"
                                    Aspect="AspectFill"
                                    HeightRequest="60"
                                    WidthRequest="60"/>
+
+                            <!-- Nombre completo -->
                             <Label Grid.Column="1"
                                    Grid.Row="0"
                                    Text="{Binding NombreCompleto}"
                                    FontAttributes="Bold"
                                    FontSize="20"/>
+
+                            <!-- Curso -->
                             <Label Grid.Column="1"
                                    Grid.Row="1"
                                    Text="{Binding Curso.Nombre}"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
             </CollectionView>
-
 
         </Grid>
     </ScrollView>

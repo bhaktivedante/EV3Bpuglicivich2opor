@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RegistroEstudiantes.AppMovil.Vistas.EditarEstudiantes"
+             Title="Editar Estudiante">
+    <StackLayout Padding="20" Spacing="15">
+        <!-- Campo Nombre -->
+        <Label Text="Nombre" FontAttributes="Bold"/>
+        <Entry x:Name="NombreEntry" Placeholder="Nombre"/>
+
+        <!-- Campo Apellido -->
+        <Label Text="Apellido" FontAttributes="Bold"/>
+        <Entry x:Name="ApellidoEntry" Placeholder="Apellido"/>
+
+        <!-- Campo Correo Electrónico -->
+        <Label Text="Correo Electrónico" FontAttributes="Bold"/>
+        <Entry x:Name="CorreoEntry" Placeholder="Correo Electrónico" Keyboard="Email"/>
+
+        <!-- Campo Edad -->
+        <Label Text="Edad" FontAttributes="Bold"/>
+        <Entry x:Name="EdadEntry" Placeholder="Edad" Keyboard="Numeric"/>
+
+        <!-- Picker para el curso -->
+        <Label Text="Curso" FontAttributes="Bold"/>
+        <Picker x:Name="CursoPicker" Title="Selecciona un curso"/>
+
+        <!-- Botón para guardar cambios -->
+        <Button Text="Guardar Cambios"
+                x:Name="GuardarButton"
+                BackgroundColor="Green"
+                TextColor="White"
+                Clicked="OnGuardarButtonClicked"/>
+    </StackLayout>
+</ContentPage>
