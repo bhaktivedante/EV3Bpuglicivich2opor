@@ -8,7 +8,7 @@ namespace RegistroEstudiantes.Modelos.Modelos
 {
     public class Estudiante
     {
-        public string? FirebaseKey { get; set; } // Clave única de Firebase
+        public string? FirebaseKey { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
         public string? CorreoElectronico { get; set; }

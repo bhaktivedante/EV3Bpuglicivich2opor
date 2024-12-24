@@ -22,7 +22,7 @@
 
         <!-- Picker para el curso -->
         <Label Text="Curso" FontAttributes="Bold"/>
-        <Picker x:Name="CursoPicker" Title="Selecciona un curso"/>
+        <Picker x:Name="CursoPicker" Title="Selecciona un curso" ItemDisplayBinding="{Binding Nombre}" />
 
         <!-- Botón para guardar cambios -->
         <Button Text="Guardar Cambios"

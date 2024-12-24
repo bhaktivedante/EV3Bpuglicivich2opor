@@ -30,15 +30,24 @@ public partial class EditarEstudiantes : ContentPage
     {
         try
         {
+            // Obtener los cursos desde Firebase
             var cursosEnFirebase = await client
                 .Child("Cursos")
                 .OnceAsync<Curso>();
 
-            Cursos = cursosEnFirebase.Select(x => x.Object).ToList();
-            CursoPicker.ItemsSource = Cursos;
+            // Verificar que existen cursos
+            if (cursosEnFirebase != null)
+            {
+                Cursos = cursosEnFirebase.Select(c => c.Object).ToList();
+                CursoPicker.ItemsSource = Cursos;
 
-            // Seleccionar el curso actual del estudiante
-            CursoPicker.SelectedItem = Cursos.FirstOrDefault(c => c.Nombre == estudianteActual.Curso.Nombre);
+                // Seleccionar el curso actual del estudiante
+                CursoPicker.SelectedItem = Cursos.FirstOrDefault(c => c.Nombre == estudianteActual.Curso.Nombre);
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se encontraron cursos en la base de datos.", "OK");
+            }
         }
         catch (Exception ex)
         {
@@ -55,9 +64,11 @@ public partial class EditarEstudiantes : ContentPage
             estudianteActual.Apellido = ApellidoEntry.Text;
             estudianteActual.CorreoElectronico = CorreoEntry.Text;
             estudianteActual.Edad = int.Parse(EdadEntry.Text);
+
+            // Asignar el curso seleccionado
             estudianteActual.Curso = CursoPicker.SelectedItem as Curso;
 
-            // Usar la clave para actualizar el registro en Firebase
+            // Actualizar en Firebase
             if (!string.IsNullOrEmpty(estudianteActual.FirebaseKey))
             {
                 await client
