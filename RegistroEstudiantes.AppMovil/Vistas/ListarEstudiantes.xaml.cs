@@ -20,9 +20,13 @@ public partial class ListarEstudiantes : ContentPage
     {
         client.Child("Estudiantes").AsObservable<Estudiante>().Subscribe(estudiante =>
         {
-            if (estudiante?.Object != null && !Lista.Any(e => e.NombreCompleto == estudiante.Object.NombreCompleto))
+            if (estudiante?.Object != null)
             {
-                Lista.Add(estudiante.Object);
+                estudiante.Object.FirebaseKey = estudiante.Key; // Guardar la clave única
+                if (!Lista.Any(e => e.FirebaseKey == estudiante.Object.FirebaseKey))
+                {
+                    Lista.Add(estudiante.Object);
+                }
             }
         });
     }

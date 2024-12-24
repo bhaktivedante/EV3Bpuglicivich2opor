@@ -55,22 +55,14 @@ public partial class EditarEstudiantes : ContentPage
             estudianteActual.Apellido = ApellidoEntry.Text;
             estudianteActual.CorreoElectronico = CorreoEntry.Text;
             estudianteActual.Edad = int.Parse(EdadEntry.Text);
-
-            // Actualizar curso seleccionado
             estudianteActual.Curso = CursoPicker.SelectedItem as Curso;
 
-            // Buscar el estudiante en Firebase
-            var estudianteEnFirebase = (await client
-                .Child("Estudiantes")
-                .OnceAsync<Estudiante>())
-                .FirstOrDefault(x => x.Object.NombreCompleto == estudianteActual.NombreCompleto);
-
-            if (estudianteEnFirebase != null)
+            // Usar la clave para actualizar el registro en Firebase
+            if (!string.IsNullOrEmpty(estudianteActual.FirebaseKey))
             {
-                // Actualizar registro en Firebase
                 await client
                     .Child("Estudiantes")
-                    .Child(estudianteEnFirebase.Key)
+                    .Child(estudianteActual.FirebaseKey)
                     .PutAsync(estudianteActual);
 
                 await DisplayAlert("Éxito", "El estudiante ha sido actualizado correctamente.", "OK");
@@ -78,7 +70,7 @@ public partial class EditarEstudiantes : ContentPage
             }
             else
             {
-                await DisplayAlert("Error", "No se encontró el estudiante en la base de datos.", "OK");
+                await DisplayAlert("Error", "No se encontró la clave del estudiante.", "OK");
             }
         }
         catch (Exception ex)
